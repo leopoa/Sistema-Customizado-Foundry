@@ -1,0 +1,654 @@
+/* Importando padrões do generic-rpg.css fornecido */
+
+.meu-sistema .window-content {
+    background: #0f0d15;
+    padding: 0;
+}
+
+.meu-sistema .sheet-body{
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.nimble-container {
+    background: #0f0d15;
+    color: #e2d9c3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.nimble-header-combined {
+    display: flex;
+    padding: 10px;
+    background: radial-gradient(circle, #1a1725 0%, #0f0d15 100%);    
+    gap: 15px;    
+}
+
+.header-group, .hd-group { display: flex; gap: 5px; }
+.header-line {  width: 100px; background: #1a1725; border: 1px solid #2d283a; color: #e2d9c3; display: flex; align-items: center; justify-content: center; padding: 0 10px; border-radius: 3px; flex: 1; }
+.header-line input { background: transparent; border: none; text-align: center; color: inherit; width: 35px; font-weight: bold; }
+.header-line input:focus { box-shadow: none; }
+
+.profile-img-container{ margin: -10px;}
+.profile-img { height: 170px; border: none !important; align-self: center; background: transparent !important; }
+
+/* Grid Status */
+.nimble-status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px 20px;
+    gap: 15px;
+}
+
+.status-label { font-size: 11px; font-weight: bold; margin-bottom: 4px; /*color: #7a7585; */}
+
+.hp-bar-fill {  background: #1a1725; border: 1px solid #2d283a; color: #e2d9c3; display: flex; align-items: center; justify-content: center; padding: 0 10px; border-radius: 3px; flex: 1; }
+.hp-temp { background: #3a3348; width: 40px; text-align: center; line-height: 35px; border-radius: 3px; font-weight: bold; }
+.hp-bar-group, .hd-group { display: flex; gap: 5px; }
+
+.hd-values { background: #3a3348; height: 35px; display: flex; align-items: center; justify-content: center; flex: 1; color: #000; font-weight: bold; border-radius: 3px; }
+.hd-die-type { background: #3a3348; padding: 0 10px; line-height: 35px; font-size: 11px; border-radius: 3px; font-weight: bold; }
+
+.hp-bar-fill input, .hd-values input { background: transparent; border: none; text-align: center; color: inherit; width: 35px; font-weight: bold; }
+.hp-bar-fill input:focus, .hd-values input:focus { box-shadow: none; }
+
+/* Nome */
+.nimble-name-field { padding: 0 20px 10px 20px; }
+.nimble-name-field input { 
+    background: #1a1725; 
+    border: 1px solid #2d283a; 
+    color: #e2d9c3; 
+    height: 35px; 
+    width: 100%;
+    padding-left: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Navegação e Abas Ativas */
+.nimble-nav {
+    display: flex;
+    align-items: center;
+    background: #14121c;
+    border-top: 1px solid #2d283a;
+    border-bottom: 1px solid #2d283a;    
+    height: 45px;
+}
+
+.nav-label-dynamic {
+    width: 100px;
+    padding-left: 20px;
+    font-weight: bold;
+    border-right: 1px solid #2d283a;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: #e2d9c3;
+}
+
+/* Lógica de Texto Dinâmico via CSS */
+.nimble-nav:has([data-tab="home"].active) .nav-label-dynamic::after { content: "Home"; }
+.nimble-nav:has([data-tab="combat"].active) .nav-label-dynamic::after { content: "Combat"; }
+.nimble-nav:has([data-tab="bio"].active) .nav-label-dynamic::after { content: "Stats"; }
+.nimble-nav:has([data-tab="inventory"].active) .nav-label-dynamic::after { content: "Inventory"; }
+.nimble-nav:has([data-tab="features"].active) .nav-label-dynamic::after { content: "Features"; }
+.nimble-nav:has([data-tab="magic"].active) .nav-label-dynamic::after { content: "Magic"; }
+.nimble-nav:has([data-tab="journal"].active) .nav-label-dynamic::after { content: "Journal"; }
+.nimble-nav:has([data-tab="settings"].active) .nav-label-dynamic::after { content: "Settings"; }
+
+.nav-icons { flex: 1; display: flex; justify-content: space-around; padding: 0 10px; }
+.nav-icons .item { color: #7a7585; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid #2d283a; }
+
+/* DESTAQUE DO ÍCONE */
+.nav-icons .item.active { background: #7b3b3b; color: #fff !important; border-color: #ff4d4d; }
+
+/* Corpo da Ficha */
+.sheet-body { flex: 1; padding: 15px 20px; overflow-y: auto; }
+
+.nimble-footer { padding: 10px 20px; border-top: 1px solid #2d283a; font-size: 11px; font-weight: bold; color: #7a7585; }
+
+/* Estilização da Lista de Itens */
+.meu-sistema .items-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.meu-sistema .item {
+    background: rgba(255, 255, 255, 0.03);
+    margin: 4px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #2d283a;
+}
+
+.meu-sistema .item-lista {
+    background: rgba(255, 255, 255, 0.03);
+    margin: 4px;    
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #2d283a;
+    padding-right: 5px;
+}
+
+.meu-sistema .items-header {
+    background: #1a1725;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #7a7585;
+    border: 1px solid #2d283a;
+}
+
+.meu-sistema .item-image {
+    width: 32px;
+    height: 32px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 3px;
+    margin-right: 12px;    
+}
+
+.meu-sistema .item-name { flex: 1; }
+.meu-sistema .item-name h4 {
+    margin: 0;
+    font-size: 13px;
+    color: #e2d9c3;
+}
+
+.meu-sistema .item-controls {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.meu-sistema .item-control {
+    color: #7a7585;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.meu-sistema .item-control:hover {
+    color: #e2d9c3;
+}
+
+/* Destaque para item equipado */
+.meu-sistema .item-controls .equipped {
+    color: #ff4d4d; /* Vermelho vibrante */
+    text-shadow: 0 0 5px rgba(255, 77, 77, 0.6); /* Brilho suave opcional */
+    transition: all 0.2s ease;
+}
+
+.meu-sistema .item-control .item-delete:hover {
+    color: #ff4d4d;
+}
+
+
+/* Formulários do Foundry */
+.meu-sistema input[type="text"], 
+.meu-sistema input[type="number"], 
+.meu-sistema select{
+    border: 1px solid #2d283a;
+    background: #1a1725;
+    color: #e2d9c3;
+}
+
+.meu-sistema select option {
+    background-color: #1a1a1a; /* Cor do fundo da lista */
+    color: #f0f0f0;            /* Cor do texto na lista */
+}
+
+.meu-sistema select option:hover, 
+.meu-sistema select option:focus {
+    background-color: #444 !important;
+    color: #ffffff !important;
+}
+
+
+
+
+
+.meu-sistema  input[type="checkbox"] {
+    margin: 0;
+}
+
+.meu-sistema .exhaustion-check {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 3px !important;
+    border: 1px solid #2d283a;    
+    background: #1a1725;
+    cursor: pointer;
+    border-radius: 2px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* Estado Marcado - Estilo Nimble */
+.meu-sistema .exhaustion-check:checked {
+    background: #8e3e3e; /* Vermelho escuro */
+    border-color: #ff4d4d; /* Borda brilhante */
+    box-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
+}
+
+/* Efeito de "X" ou preenchimento interno */
+.meu-sistema .exhaustion-check:checked::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    /*background: white;*/
+    border-radius: 1px;
+}
+
+
+
+.meu-sistema .nimble-status-aba {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    padding-bottom: 20px;  
+    margin: 4px; 
+}
+
+
+
+
+.meu-sistema .informacao-header {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 8px;
+    background: #1a1725;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #7a7585;
+    border: 1px solid #2d283a;
+    padding: 4px;
+    margin: 4px;    
+    border-radius: 3px;
+}
+
+.meu-sistema .informacao-header .linha {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.meu-sistema .informacao-header .linha label{
+    font-size: 11px !important;  
+    text-transform: uppercase;  
+    width: 44px; 
+}
+
+.meu-sistema .informacao-header .linha input {
+    flex: 1;
+    font-size: 14px !important; 
+    border: 0;
+}
+
+
+
+
+
+
+.meu-sistema .atributos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: #1a1725;        
+    text-transform: uppercase;
+    color: #7a7585;
+    border: 1px solid #2d283a;
+    padding: 4px;
+    margin: 4px;    
+    border-radius: 3px;
+}
+
+.meu-sistema .atributos .info {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 8px;
+    background: #1a1725;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #7a7585;
+    border: 1px solid #2d283a;
+    padding: 4px;
+    margin: 4px;    
+    border-radius: 3px;
+    background: #0f0d15;
+}
+
+.meu-sistema .atributos .info:hover{
+    transform: scale(1.08);    
+    box-shadow: 0 0 5px rgba(255, 77, 77, 0.6); /* Brilho suave opcional */
+}
+
+.meu-sistema .atributos .attr {    
+    display: flex;           /* Garante que o flexbox esteja ativo */
+    flex-direction: column;  /* Empilha label e input (opcional, dependendo do design) */
+    align-items: center;     /* Centraliza horizontalmente no container */
+    justify-content: center; /* Centraliza verticalmente no container */
+    text-align: center;      /* Centraliza o texto interno */
+    gap: 4px;
+}
+
+.meu-sistema .atributos .attr label{
+    font-size: 11px !important;  
+    margin-top: 5px;
+    cursor: pointer;
+    text-transform: uppercase;  
+    width: 100%;             /* Ocupa a largura total para alinhar o texto */
+    text-align: center;
+}
+
+.meu-sistema .atributos .attr input {
+    width: 100%;             /* Garante que o input use o espaço disponível */
+    font-size: 14px !important; 
+    border: 0;
+    text-align: center;      /* Centraliza o texto digitado dentro do input */
+    background: transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.meu-sistema .roll-dialog {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    text-align: left !important;
+}
+
+
+
+
+
+
+
+
+/* CHAT OFICIAL FOUNDRY */
+.chat-message {    
+    background: #0f0d15 !important;
+    border: 2px solid #8e3e3e !important;              
+}
+
+.chat-message header{
+   /* border-bottom: 1px solid #e2d9c3 !important;    */
+    color: #e2d9c3 !important;
+    background-color: #8e3e3e;
+    padding: 5px;
+    margin: -5px -5px 0 -5px;
+    margin-left: -5px;
+}
+
+.chat-message header .part-formula{
+    background: #0f0d15 !important;
+    margin: -5px -35px -5px -5px;
+    padding: 5px;
+}
+
+.chat-message header h4{    
+    color: #e2d9c3 !important;
+}
+
+.chat-message .message-content{
+    color: #E1E1E6 !important;
+    padding: 5px;
+    margin: 0 -5px 0 -5px;
+    font-weight: normal !important;
+}
+
+.chat-message .message-content .dice-tooltip .part-header .part-total {
+    margin-bottom: -5px;
+}
+
+
+
+
+
+/* CHAT CRIANDO MSG */
+.msg-chat-card {
+    background: #0f0d15;          
+    color: #fff;    
+}
+
+.msg-chat-card header {
+    display: flex;
+    justify-content: space-between;    
+    padding-bottom: 4px;    
+    font-size: 12px;
+    margin: -2px -2px 2px -2px !important;
+    background: #1a1725 !important;
+    color: #7a7585 !important;
+}
+
+
+.msg-chat-card .dice-icon-bg {
+    background-color: #4a3c66; 
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: white;
+}
+
+.msg-chat-card .info {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);    
+    font-size: 14px !important;    
+    padding: 4px;
+    font-weight: normal !important;    
+}
+
+.msg-chat-card .info hr{
+    width: 106%;
+    margin-left: -9px;      
+    border: none;
+    border-bottom: 1px solid  #2d283a;
+}
+
+.msg-chat-card .info .linha {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+
+
+/* DADO NO CHAT */
+.msg-chat-card .dado {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; /* Ajuste conforme o tamanho desejado do dado */
+    height: 32px;
+}
+
+.msg-chat-card .dado:hover {
+  transform: scale(1.08);
+}
+
+.msg-chat-card .dado img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none !important;
+    background: none !important;
+}
+
+.msg-chat-card .dado-value {
+    position: relative; /* Fica acima da imagem absoluta */
+    z-index: 1;
+    color: #1a1725; /* Ou #1a1725 se o dado for claro */
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1;
+    /* Garante que o texto ignore cliques se necessário */
+    pointer-events: none; 
+    top: -4px;   /* Valores negativos movem para CIMA */
+    left: -4px;       
+}
+
+
+
+
+
+/* PONTOS DE VIDA */
+.blood-bar {
+  display: flex;
+  flex-direction: column;  
+}
+
+.blood-bar input {
+  display: none;
+}
+
+.drop {
+  width: 18px;
+  height: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.outline {
+  fill: none;
+  stroke: #d0d0d0;
+  stroke-width: 3.5;
+}
+
+.fill {
+  fill: #e10600;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.shine {
+  fill: none;
+  stroke: rgba(255,255,255,0.5);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+input:checked + .drop .fill {
+  opacity: 1;
+}
+
+label:hover .drop {
+  transform: scale(1.08);
+}
+
+label:hover .outline {
+  stroke: white;
+}
+
+
+
+
+
+
+.meu-sistema .escola-magia {
+    border: 1px solid #2d283a;
+    background: black;
+}
+
+/* Esconde todos os itens da lista exceto o header quando recolhido */
+.meu-sistema .escola-magia.collapsed .item-lista {
+    display: none;
+}
+
+/* Roda o ícone de seta para indicar que está fechado */
+.meu-sistema .escola-magia.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.meu-sistema .toggle-icon {
+    transition: transform 0.2s ease;
+    margin-right: 5px;
+}
+
+
+
+
+
+/* SANGUE */
+.sangue-colunm {
+  display: flex;
+  flex-direction: column;  
+  gap: 3px;
+}
+
+.sangue-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+    display: none !important; /* Garante que o quadrado suma */
+}
+
+.sangue-checkbox i {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: transparent !important;       /* Sem cor interna */
+    -webkit-text-stroke: 1.5px #ff4444;    /* Apenas contorno vermelho */
+    display: inline-block;
+    transition: transform 0.1s ease;
+}
+
+.sangue-checkbox input[type="checkbox"]:checked + i {
+    color: #ff4444 !important;           /* Preenche com vermelho */
+    -webkit-text-stroke: 1px #8b0000;      /* Borda escura opcional */
+}
+
+.sangue-checkbox:active i {
+    transform: scale(0.9);
+}
+
+
+
+
+
+
+.sheet-item {
+    color: #fff;    
+}
+
+.sheet-item .tab[data-tab="description"] {
+    height: 100%;
+}
+
+.sheet-item textarea {
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid #7a7971;
+    border-radius: 4px;
+    padding: 8px;
+    resize: vertical;
+    font-family: "Signika", sans-serif;
+    color: #fff;
+}

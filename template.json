@@ -1,0 +1,69 @@
+{
+  "Actor": {
+    "types": ["character"],
+    "character": {
+      "attr": {
+        "str": 0,
+        "agi": 0,
+        "ast": 0,
+        "emp": 0
+      },
+      "health": {
+        "value": 20,
+        "max": 20
+      },
+      "hitDice": "",
+      "slots": {
+        "value": 3,
+        "max": 12
+      },
+      "active_sheet": "",
+      "exhaustion": 0,
+      "classe": "",
+      "nivel": "1"
+    }
+  },
+  "Item": {
+    "types": ["item", "magia", "talento", "arma", "armadura", "escudo"],
+    "isSpell" : false,
+    "isItem" : false,
+    "isTalent" : false,
+    "isArma" : false,
+    "isArmadura" : false,
+    "isEscudo": false,
+    "description": "",
+    "item": {      
+      "equipped": false,
+      "quantity": 1,      
+      "weight": 1
+    },
+    "spell": {      
+      "level": 0,    
+      "escola": "",  
+      "dado": "",
+      "qtdDado": 1,
+      "prepared": false
+    },
+    "arma": {
+      "dano": "",
+      "dado": "",
+      "tipoAtaque": "",
+      "qtdDado": 1,
+      "alcance": "",
+      "equipped": false,
+      "atributo": ""
+    },
+    "armadura": {
+      "defesa": 0,
+      "equipped": false,
+      "penalidade": 0,
+      "tipo": ""
+    },
+    "escudo": {
+      "defesa": 0,
+      "equipped": false,
+      "penalidade": 0,
+      "tipo": ""
+    }
+  }
+}

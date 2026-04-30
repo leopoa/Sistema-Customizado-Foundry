@@ -1,0 +1,134 @@
+<form class="{{cssClass}} sheet-item" autocomplete="off">
+    <header class="sheet-header">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <div class="header-fields">
+            <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Nome"/></h1>
+        </div>
+    </header>
+
+    <section class="sheet-body">
+            
+        {{#if isSpell}}
+            
+            <!--
+            <div class="form-group">
+                <label>Preparada</label>
+                <input type="checkbox" name="system.prepared" {{checked system.prepared}}/>
+            </div>
+            -->
+
+            <div class="form-group">
+                <label>Escola de Magia</label>
+                <select name="system.escola">
+                    {{#select system.escola}}
+                    <option value="Fogo">Fogo</option>
+                    <option value="Gelo">Gelo</option>
+                    <option value="Raio">Raio</option>
+                    <option value="Necrotico">Necrótico</option>
+                    <option value="Radiante">Radiante</option>
+                    <option value="Natureza">Natureza</option>
+                    {{/select}}
+                </select>
+            </div>
+
+        {{/if}}    
+
+        {{#if isItem}}
+
+            <div class="form-group">
+                <label>Quantidade</label>
+                <input type="number" name="system.quantity" value="{{system.quantity}}" data-dtype="Number"/>
+            </div>
+            <div class="form-group">
+                <label>Peso</label>
+                <input type="number" name="system.weight" value="{{system.weight}}" data-dtype="Number"/>
+            </div>
+            <div class="form-group">
+                <label>Equipado</label>
+                <input type="checkbox" name="system.equipped" {{checked system.equipped}}/>
+            </div>
+
+        {{/if}}
+
+         {{#if isArma}}
+            
+            <div class="form-group">
+                <label>Dado de Dano</label>
+                <select name="system.dado">
+                    {{#select system.dado}}
+                    <option value="">—</option>
+                    <option value="d4">d4</option>
+                    <option value="d6">d6</option>
+                    <option value="d8">d8</option>
+                    <option value="d10">d10</option>
+                    <option value="d12">d12</option>
+                    {{/select}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Quantidade de Dados</label>
+                <select name="system.qtdDado">
+                    {{#select system.qtdDado}}
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    {{/select}}
+                </select>
+            </div>
+
+             <div class="form-group">
+                <label>Tipo de Ataque</label>
+                <select name="system.tipoAtaque">
+                    {{#select system.tipoAtaque}}
+                    <option value="melee">Corpo a Corpo</option>
+                    <option value="range">à Distância</option>
+                    {{/select}}
+                </select>
+            </div>
+
+            
+
+            
+
+        {{/if}}  
+
+        {{#if isArmadura}}
+            
+            <div class="form-group">
+                <label>Defesa</label>
+                <input type="number" name="system.defesa" value="{{system.defesa}}" data-dtype="Number"/>
+            </div>
+
+        {{/if}}  
+
+
+        {{#if isEscudo}}
+            
+            <div class="form-group">
+                <label>Defesa</label>
+                <input type="number" name="system.defesa" value="{{system.defesa}}" data-dtype="Number"/>
+            </div>
+
+        {{/if}}  
+
+
+
+        <div class="form-group">
+            <label>Descrição</label>
+        </div>    
+        <div class="form-group">
+            <textarea name="system.description" rows="10" title="Descrição">{{system.description}}</textarea>
+        </div>
+
+        
+
+    </section>
+</form>

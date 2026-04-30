@@ -1,0 +1,15 @@
+{
+  "MEU_SISTEMA": {
+    "HitPoints": "Hit Points",
+    "HitDice": "Hit Dice",
+    "Inventory": "Inventário",
+    "Combat": "Combate",
+    "Spells": "Magias",
+    "Name": "Nome",
+    "Equip": "Equipar",
+    "Unequip": "Desequipar",
+    "Edit": "Editar",
+    "Delete": "Remover",
+    "InventorySlots": "Inventory Slots"
+  }
+}

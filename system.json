@@ -1,0 +1,36 @@
+{
+  "id": "meu-sistema-custom",
+  "title": "Meu Sistema Customizado",
+  "description": "Um sistema customizado baseado em uma ficha específica para Foundry VTT v11.",
+  "version": "1.0.0",
+  "library": false,
+  "manifest": "",
+  "download": "",
+  "authors": [
+    {
+      "name": "Leonardo Amarilho"
+    }
+  ],
+  "compatibility": {
+    "minimum": "11",
+    "verified": "11"
+  },
+  "scripts": [
+    "module/main.js"
+  ],
+  "styles": [
+    "css/style.css"
+  ],
+  "languages": [
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    }
+  ],
+  "grid": 50,
+  "gridDistance": 1.5,
+  "gridUnits": "m",
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": "power"
+}
