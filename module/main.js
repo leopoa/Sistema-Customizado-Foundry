@@ -19,8 +19,8 @@ class MeuAtorSheet extends ActorSheet {
 
         context.system = actorData.system;
         context.flags = actorData.flags;
+        context.isGM = game.user.isGM;        
 
-        // Preparar itens
         this._prepareItems(context);
 
         return context;
@@ -51,8 +51,7 @@ class MeuAtorSheet extends ActorSheet {
                     }
 
                     if(i.type === 'arma'){
-                        i.labelTipoAtaque = i.system.tipoAtaque === 'range' ? 'à Distância' : 'Corpo a Corpo';
-                        console.log(i);
+                        i.labelTipoAtaque = i.system.tipoAtaque === 'range' ? 'à Distância' : 'Corpo a Corpo';                        
                         armasEquipadas.push(i);
                     }
                 }                
@@ -66,7 +65,7 @@ class MeuAtorSheet extends ActorSheet {
         context.spells = spells;
         context.equippedItems = equippedItems;
         context.armaduraEquipada = armaduraEquipada;
-        context.armasEquipadas = armasEquipadas;
+        context.armasEquipadas = armasEquipadas;    
 
     }
 
@@ -124,6 +123,8 @@ class MeuAtorSheet extends ActorSheet {
 
         // Editar Item
         html.find('.item-edit').click(ev => {
+            ev.stopPropagation();
+
             const li = $(ev.currentTarget).parents(".item-lista");
             const item = this.actor.items.get(li.data("itemId"));
                         
@@ -139,6 +140,8 @@ class MeuAtorSheet extends ActorSheet {
 
         // Remover Item
         html.find('.item-delete').click(async ev => {
+            ev.stopPropagation();
+            
             const li = $(ev.currentTarget).parents(".item-lista");
             const item = this.actor.items.get(li.data("itemId"));            
             item.delete();
@@ -178,6 +181,8 @@ class MeuAtorSheet extends ActorSheet {
         html.find('.roll-atributos').click(ev => { this._onRollDialog(ev); });
 
         html.find('.roll-arma').click(ev => { this._onRollDialog(ev); });
+
+        html.find('.roll-magia').click(ev => { this._onRollDialog(ev); });        
 
         this._createItem(html);     
 
@@ -269,17 +274,14 @@ class MeuAtorSheet extends ActorSheet {
         if (ev.target.tagName === "INPUT") return;
 
         const element = $(ev.currentTarget);
-
+        const dados = event.currentTarget.dataset;
+      
         //const label = element.find('label').text();
         //const attr = element.find('.roll-value').val();
-
-        const dados = event.currentTarget.dataset;
         //console.log('---');
         //console.log(dados);  
         //console.log(dados.desc);  
-        //console.log(dados.attr); 
-
-        console.log(dados); 
+        //console.log(dados.attr);         
 
         if(dados.tipo === 'arma'){
             dados.attr = (dados.tipoataque === 'range') ? this.actor.system.attr.agi : this.actor.system.attr.str;
@@ -332,14 +334,10 @@ class MeuAtorSheet extends ActorSheet {
                     icon: '<i class="fas fa-check"></i>',
                     label: "Rolar",
                     callback: async (html) => {
-                        const mode = html.find('[name="rollMode"]:checked').val();
-                        const bonus = html.find('[name="modificadorExtra"]').val();
+                        const mode = html.find('[name="rollMode"]:checked').val();   
+                        const totalBonus = parseInt(html.find('[name="modificadorExtra"]').val()) + parseInt(dados.bonus);                     
 
-                        let resultado = null;
-                        //if(dados.tipo === 'atributo') resultado = await this.executarRolagemAtributo(dados.dado, bonus, mode, dados.attr ?? 0, dados.qtd ?? 1, dados.tipo ?? '');
-                        //if(dados.tipo === 'arma') resultado = await this.rolagem(dados.dado, bonus, mode, dados.attr ?? 0, dados.qtd ?? 1, dados.tipo ?? '')
-
-                        resultado = await this.rolagem(dados.dado, bonus, mode, dados.attr ?? 0, dados.qtd ?? 1, dados.tipo ?? '')    
+                        let resultado = await this.rolagem(dados.dado, totalBonus, mode, dados.attr ?? 0, dados.qtd ?? 1, dados.tipo ?? '')    
 
                         this._sendCustomChatMessage(resultado, dados.desc, dados.tipo ?? '');
                     }
@@ -382,16 +380,17 @@ class MeuAtorSheet extends ActorSheet {
     async _sendCustomChatMessage(roll, label, tipo) {        
         //const imgPath = "systems/meu-sistema-custom/assets/d20white.png";
 
-        const qtdMaximos = roll.qtdCriticos;
-        const resultados = roll.isFail ? roll.allDice : roll.selectedDie;
+        const acertoCritico = roll.acertoCritico;
+        const resultados = roll.selectedDie;
         const tipoDado = roll.tipoDado;
-
-        console.log('---- ' + roll.isFail);
+        const valorMaximoDado = roll.valorMaximoDado;
+        const isFail = roll.isFail;
         
         const dadosHTML = resultados.map((r, index) => {
             let bgColor = "#333";
             
-            if (index === 0 && r === 1 && roll.isFail) bgColor = "#c0392b"; // Vermelho para Falha Crítica                           
+            if (index === 0 && r === 1 && isFail) bgColor = "#c0392b"; 
+            if (index === 0 && r === valorMaximoDado && acertoCritico) bgColor = "#2980b9"; 
 
             //if (r === 20) bgColor = "#4b42c9";     // Sucesso 
             //else if (r === 1) bgColor = "#c0392b"; // Falha 
@@ -403,7 +402,7 @@ class MeuAtorSheet extends ActorSheet {
         let botaoFailHTML = ""
         let msgCritico = "";   
         
-        if(roll.isFail){
+        if(isFail){
 
             botaoFailHTML =  `
                 <div style="margin-top: 5px;">
@@ -413,26 +412,22 @@ class MeuAtorSheet extends ActorSheet {
                 </div>
             `;
 
-        } else if (qtdMaximos > 0) {
+        } else if (acertoCritico) {
 
             msgCritico = `
                 <div class="linha" style="margin-top: 10px;">                                        
                     <span style="color:#fff"> <i class="fas fa-bolt"></i> Acerto Crítico </span>
                 </div>
             `;
-
-            if(tipo !== 'atributo'){
-                for (let i = 0; i < qtdMaximos; i++) {
-                    botoesCriticoHTML += `
-                        <div style="margin-top: 5px;">
-                            <button class="roll-critico" data-die="${tipoDado}" data-indice="${i + 1}" 
-                                    style="background: #2a1b22; color: #ff4444; border: 1px solid #ff4444; cursor: pointer; font-size: 10px; text-transform: uppercase; width: 100%;">
-                                <i class="fas fa-bolt"></i> Rolar Crítico #${i + 1}
-                            </button>
-                        </div>
-                    `;
-                }
-            }
+            
+            botoesCriticoHTML += `
+                <div style="margin-top: 5px;">
+                    <button class="roll-critico" data-die="${tipoDado}" data-indice="0" 
+                            style="background: #2a1b22; color: #ff4444; border: 1px solid #ff4444; cursor: pointer; font-size: 10px; text-transform: uppercase; width: 100%;">
+                        <i class="fas fa-bolt"></i> Rolar Crítico
+                    </button>
+                </div>
+            `;            
                         
         }
 
@@ -442,7 +437,7 @@ class MeuAtorSheet extends ActorSheet {
             </div>
         ` : "";
 
-        const msgAtributo2 = (tipo !== 'magia') ? `+ Atributo: ${roll.attr})`: "";
+        const msgAtributo2 = (tipo !== 'magia') ? `+ Atributo: ${roll.attr})`: ")";
 
 
         const msgTotal = `
@@ -454,20 +449,7 @@ class MeuAtorSheet extends ActorSheet {
                 <span class="dadosRolados" style="color: #7a7585; font-size:12px; margin-left: -7px;"> ${roll.somaDados} </span>
                 <span style="color: #7a7585; font-size:12px;margin-left: -7px;"> + Bonus: ${roll.bonus} ${msgAtributo2} </span>
             </div> 
-        `
-
-        //const resultados = [];
-        //for (let i = 0; i < qtdDados; i++) {
-        //    const roll = new Roll("1d6").evaluate({ async: false });
-        //    resultados.push(roll.total);
-        //}
-
-        //<span class="dado">
-        //  <img src="${imgPath}" style="border: none; width: 24px; height: 24px; background: none;"> 
-        //  <span class="dado-value">${roll.total}</span>
-        //</span>
-
-        //fas fa-bolt  fas fa-skull
+        `;
 
         const chatContent = `
         <div class="msg-chat-card">
@@ -513,23 +495,18 @@ class MeuAtorSheet extends ActorSheet {
     async rolagem(tipoDado, bonus, mode, attr, qtd, tipo) {
         const dados = [];
         let falhaCritica = false;
-        let qtdMaximos = 0;
+        let acertoCritico = false;
         let qtdFinal = parseInt(qtd);
 
-        const valorMaximoDado = parseInt(tipoDado.replace("d", ""));
+        const valorMaximoDado = parseInt(tipoDado.replace("d", ""));        
         
         if (mode === "Vantagem") qtdFinal += 1;
         else if (mode === "Desvantagem") qtdFinal += 2;
-
-        // 1. Realiza as rolagens mantendo a ordem
+        
         for (let i = 0; i < qtdFinal; i++) {
             const roll = new Roll(`1${tipoDado}`).evaluate({ async: false });
             const resultadoDado = roll.total;            
             dados.push(resultadoDado);            
-        }
-
-        if (dados[0] === 1) {
-            falhaCritica = true;            
         }
 
         // 2. Lógica de Descarte mantendo a ORDEM ORIGINAL
@@ -550,12 +527,8 @@ class MeuAtorSheet extends ActorSheet {
             }
         }
 
-        for (let r of resultados) {
-            if (r === valorMaximoDado) {
-                qtdMaximos++;
-            }
-        }
-
+        if (resultados[0] === 1) falhaCritica = true;            
+        if (resultados[0] === valorMaximoDado) acertoCritico = true;            
 
         // 3. Cálculos Finais
         const somaDados = resultados.reduce((total, valor) => total + valor, 0);
@@ -569,58 +542,15 @@ class MeuAtorSheet extends ActorSheet {
             bonus: valorBonus,
             total: totalFinal,
             mode: mode,
-            qtdCriticos: qtdMaximos,
+            acertoCritico: acertoCritico,
             isFail: falhaCritica,
             attr: valorAttr,
             somaDados: somaDados,
+            valorMaximoDado: valorMaximoDado,
             tipoDado: tipoDado
         };
     }
 
-
-
-    async executarRolagemAtributo(dieType, bonus, mode, attr, qtd, tipo) {
-        
-        // Pegamos o número de faces removendo o "d" da string (ex: "d20" vira 20)
-        const faces = parseInt(dieType.replace("d", ""));
-       
-        const r1 = await new Roll(`${qtd}${dieType}`).evaluate();
-        let results = [r1.total];
-        let finalDieValue = r1.total;        
-
-        if (mode !== "Normal") {
-            const r2 = await new Roll(`${qtd}${dieType}`).evaluate();
-            results.push(r2.total);
-
-            if (mode === "Vantagem") {
-                finalDieValue = Math.max(r1.total, r2.total);
-            } else if (mode === "Desvantagem") {
-                finalDieValue = Math.min(r1.total, r2.total);
-            }
-        }
-
-        // Lógica que você pediu: se o dado escolhido for o valor máximo
-        const isCritico = (finalDieValue === faces);
-
-        const isFail = (finalDieValue === 1);
-
-        let totalFinal = finalDieValue + parseInt(bonus || 0) + parseInt(attr || 0);
-
-        if(isCritico) totalFinal = finalDieValue;
-        if(isFail) totalFinal = finalDieValue;
-
-        return {
-            allDice: results,
-            selectedDie: finalDieValue,
-            bonus: bonus,
-            total: totalFinal,
-            mode: mode,
-            isCritico: isCritico,
-            isFail: isFail,
-            attr: attr,
-            dieType: dieType
-        };
-    }   
     
     /** @override */
     async _onDropItem(event, data) {
@@ -658,7 +588,7 @@ class MeuItemSheet extends ItemSheet {
             classes: ["meu-sistema", "sheet", "item"],
             template: "systems/meu-sistema-custom/templates/item/item-sheet.html",
             width: 350,
-            height: 500            
+            height: 530            
         });
     }
 
@@ -672,7 +602,8 @@ class MeuItemSheet extends ItemSheet {
         context.isArmadura = context.item.type === "armadura";
         context.isArma = context.item.type === "arma";
         context.isEscudo = context.item.type === "escudo";
-        
+        context.isGM = game.user.isGM;
+
         return context;
     }
 }
@@ -727,8 +658,7 @@ Hooks.on("renderChatMessage", (message, html, data) => {
 
         const dadosHTML = resultados.map((r) => {
             let bgColor = "#333";
-            //if (r === 20) bgColor = "#4b42c9";     // Sucesso 
-            //else if (r === 1) bgColor = "#c0392b"; // Falha 
+            if (r === faces) bgColor = "#2980b9";               
 
             return `<span style="display:inline-block;width:28px;text-align:center;margin:2px;padding:4px;background:${bgColor};border-radius:4px;color:#fff; border: 1px solid #fff;">${r}</span>`;
         }).join('');

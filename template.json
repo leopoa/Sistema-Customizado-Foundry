@@ -32,6 +32,9 @@
     "isArmadura" : false,
     "isEscudo": false,
     "description": "",
+    "dado": "",
+    "qtdDado": 1,
+    "bonus" : 0,
     "item": {      
       "equipped": false,
       "quantity": 1,      
@@ -39,16 +42,11 @@
     },
     "spell": {      
       "level": 0,    
-      "escola": "",  
-      "dado": "",
-      "qtdDado": 1,
-      "prepared": false
+      "escola": "",       
+      "prepared": true
     },
-    "arma": {
-      "dano": "",
-      "dado": "",
-      "tipoAtaque": "",
-      "qtdDado": 1,
+    "arma": {      
+      "tipoAtaque": "",      
       "alcance": "",
       "equipped": false,
       "atributo": ""

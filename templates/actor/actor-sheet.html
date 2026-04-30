@@ -209,7 +209,7 @@
                     <div class="item-name">Propriedades</div>                    
                 </li>
                 {{#each armasEquipadas as |item id|}}
-                <li class="item-lista roll-arma" data-item-id="{{item._id}}" data-dado="{{item.system.dado}}" data-desc="{{item.name}}" data-tipoAtaque="{{item.system.tipoAtaque}}" data-tipo="arma" data-qtd="{{item.system.qtdDado}}">
+                <li class="item-lista roll-arma" data-item-id="{{item._id}}" data-dado="{{item.system.dado}}" data-desc="{{item.name}}" data-tipoAtaque="{{item.system.tipoAtaque}}" data-tipo="arma" data-qtd="{{item.system.qtdDado}}" data-bonus="{{item.system.bonus}}">
                     <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                     <div class="item-name">
                         <h4>{{item.name}}</h4>
@@ -273,26 +273,34 @@
             <div class="escola-magia">
                 <ol class="items-list">
                     <li class="item items-header toggle-spells" style="cursor: pointer;"">
-                        <div class="item-name"><i class="fas fa-caret-down toggle-icon"></i>Magia</div>
+                        <div class="item-name"><i class="fas fa-caret-down toggle-icon"></i>Magias</div>
                         <div class="item-controls">Ações</div>
-                        <a class="item-control spell-create" title="Adicionar Magia" data-type="magia" style="margin-left: 10px;">
-                            <i class="fas fa-plus"></i>
-                        </a>
+                        {{#if isGM}}
+                            <a class="item-control spell-create" title="Adicionar Magia" data-type="magia" style="margin-left: 10px;">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        {{/if}}
                     </li>
                     {{#each spells as |item id|}}
-                    <li class="item-lista" data-item-id="{{item._id}}">
+                    <li class="item-lista roll-magia" data-item-id="{{item._id}}"  data-item-id="{{item._id}}" data-dado="{{item.system.dado}}" data-desc="{{item.name}}" data-tipo="magia" data-qtd="{{item.system.qtdDado}}" data-bonus="{{item.system.bonus}}">
                         <div class="item-image" style="background-image: url('{{item.img}}')"></div>
                         <div class="item-name">
                             <h4>{{item.name}}</h4>
                         </div>
                         <div class="item-controls">
-                            <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>
-                            <a class="item-control item-delete" title="Remover"><i class="fas fa-trash"></i></a>
+                            {{#if ../isGM}}
+                                <a class="item-control item-edit" title="Editar"><i class="fas fa-edit"></i></a>                                                       
+                                <a class="item-control item-delete" title="Remover"><i class="fas fa-trash"></i></a>
+                            {{/if}}
                         </div>
                     </li>
                     {{/each}}
                 </ol>
             </div>
+
+            
+
+
         </div>
     </section>
 

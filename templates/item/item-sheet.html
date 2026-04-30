@@ -10,13 +10,6 @@
             
         {{#if isSpell}}
             
-            <!--
-            <div class="form-group">
-                <label>Preparada</label>
-                <input type="checkbox" name="system.prepared" {{checked system.prepared}}/>
-            </div>
-            -->
-
             <div class="form-group">
                 <label>Escola de Magia</label>
                 <select name="system.escola">
@@ -30,6 +23,73 @@
                     {{/select}}
                 </select>
             </div>
+
+            <div class="form-group">
+                <label>Nível</label>
+                <select name="system.level">
+                    {{#select system.level}}
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>                    
+                    {{/select}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Dado de Dano</label>
+                <select name="system.dado">
+                    {{#select system.dado}}
+                    <option value="">—</option>
+                    <option value="d4">d4</option>
+                    <option value="d6">d6</option>
+                    <option value="d8">d8</option>
+                    <option value="d10">d10</option>
+                    <option value="d12">d12</option>
+                    {{/select}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Quantidade Dados</label>
+                <select name="system.qtdDado">
+                    {{#select system.qtdDado}}
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    {{/select}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Bonus</label>
+                <select name="system.bonus">
+                    {{#select system.bonus}}
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>                    
+                    {{/select}}
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label>Disponível</label>
+                <input type="checkbox" name="system.prepared" {{checked system.prepared}}/>
+            </div>
+
+
 
         {{/if}}    
 
@@ -94,7 +154,10 @@
                 </select>
             </div>
 
-            
+            <div class="form-group">
+                <label>Bonus</label>
+                <input type="number" name="system.bonus" value="{{system.bonus}}" data-dtype="Number"/>
+            </div>
 
             
 
@@ -107,6 +170,11 @@
                 <input type="number" name="system.defesa" value="{{system.defesa}}" data-dtype="Number"/>
             </div>
 
+            <div class="form-group">
+                <label>Bonus</label>
+                <input type="number" name="system.bonus" value="{{system.bonus}}" data-dtype="Number"/>
+            </div>
+
         {{/if}}  
 
 
@@ -115,6 +183,11 @@
             <div class="form-group">
                 <label>Defesa</label>
                 <input type="number" name="system.defesa" value="{{system.defesa}}" data-dtype="Number"/>
+            </div>
+
+            <div class="form-group">
+                <label>Bonus</label>
+                <input type="number" name="system.bonus" value="{{system.bonus}}" data-dtype="Number"/>
             </div>
 
         {{/if}}  
