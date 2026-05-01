@@ -141,7 +141,7 @@ class MeuAtorSheet extends ActorSheet {
         // Remover Item
         html.find('.item-delete').click(async ev => {
             ev.stopPropagation();
-            
+
             const li = $(ev.currentTarget).parents(".item-lista");
             const item = this.actor.items.get(li.data("itemId"));            
             item.delete();
@@ -416,7 +416,7 @@ class MeuAtorSheet extends ActorSheet {
 
             msgCritico = `
                 <div class="linha" style="margin-top: 10px;">                                        
-                    <span style="color:#fff"> <i class="fas fa-bolt"></i> Acerto Crítico </span>
+                    <span style="color:#e2d9c3"> <i class="fas fa-bolt"></i> Acerto Crítico </span>
                 </div>
             `;
             
@@ -442,8 +442,8 @@ class MeuAtorSheet extends ActorSheet {
 
         const msgTotal = `
             <div class="linha" style="margin-top: 10px;">                                        
-                <span style="color:#fff">Total: </span>
-                <span class="total" style="color:#fff; margin-left: -3px"> ${roll.total} </span>
+                <span style="color:#e2d9c3">Total: </span>
+                <span class="total" style="color:#e2d9c3; margin-left: -3px"> ${roll.total} </span>
             
                 <span style="color: #7a7585; font-size:12px; margin-left: -3px"> (Dados: </span>
                 <span class="dadosRolados" style="color: #7a7585; font-size:12px; margin-left: -7px;"> ${roll.somaDados} </span>
@@ -453,10 +453,12 @@ class MeuAtorSheet extends ActorSheet {
 
         const chatContent = `
         <div class="msg-chat-card">
+
+           
                     
             <header style="display: grid; grid-template-columns: repeat(1, 1fr);  background: #1a1725; font-weight: bold; font-size: 11px; text-transform: uppercase; color: #7a7585; border: 1px solid #2d283a; padding: 4px; margin: 4px; border-radius: 3px;">
                 <div style="display: flex; align-items: center; gap: 8px;">                    
-                    <span><i class="fas fa-dice" style="margin: 0 3px 0 3px;"></i> Rolagem ${roll.tipoDado} (${roll.mode})</span>                    
+                    <span style="margin: 0 3px 0 3px;color: #e2d9c3; font-weight: normal; "> ${label}</span><span><i class="fas fa-dice" style="margin: 0 3px 0 3px;"></i> ${roll.tipoDado} (${roll.mode})</span>                    
                 </div>                
             </header>
 
