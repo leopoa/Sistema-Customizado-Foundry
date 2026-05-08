@@ -166,8 +166,17 @@
         {{#if isArmadura}}
             
             <div class="form-group">
-                <label>Defesa</label>
-                <input type="number" name="system.defesa" value="{{system.defesa}}" data-dtype="Number"/>
+                <label>Dado de Defesa</label>
+                <select name="system.dado">
+                    {{#select system.dado}}
+                    <option value="">—</option>
+                    <option value="d4">d4</option>
+                    <option value="d6">d6</option>
+                    <option value="d8">d8</option>
+                    <option value="d10">d10</option>
+                    <option value="d12">d12</option>
+                    {{/select}}
+                </select>
             </div>
 
             <div class="form-group">
@@ -181,14 +190,23 @@
         {{#if isEscudo}}
             
             <div class="form-group">
-                <label>Defesa</label>
-                <input type="number" name="system.defesa" value="{{system.defesa}}" data-dtype="Number"/>
+                <label>Defesa</label>                
+                <select name="system.defesa">
+                    {{#select system.defesa}}
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    {{/select}}
+                </select>
             </div>
-
-            <div class="form-group">
-                <label>Bonus</label>
-                <input type="number" name="system.bonus" value="{{system.bonus}}" data-dtype="Number"/>
-            </div>
+            
 
         {{/if}}  
 

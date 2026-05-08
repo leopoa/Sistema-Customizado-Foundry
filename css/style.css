@@ -652,3 +652,38 @@ label:hover .outline {
     font-family: "Signika", sans-serif;
     color: #fff;
 }
+
+
+
+
+
+
+
+.dice-progress-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+/* Esconde o checkbox padrão */
+.dice-count-check {
+    display: none;
+}
+
+.dice-checkbox {
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.1s ease;
+}
+
+.dice-checkbox:hover {
+    transform: scale(1.2);
+}
+
+/* Lógica de troca de ícones */
+.dice-checkbox .icon-checked { display: none; color: var(--wiki-accent); }
+.dice-checkbox .icon-unchecked { display: inline-block; opacity: 0.5; }
+
+/* Quando o input estiver marcado */
+.dice-count-check:checked ~ .icon-checked { display: inline-block; }
+.dice-count-check:checked ~ .icon-unchecked { display: none; }

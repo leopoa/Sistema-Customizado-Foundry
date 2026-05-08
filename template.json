@@ -12,14 +12,11 @@
         "value": 20,
         "max": 20
       },
-      "hitDice": "",
-      "slots": {
-        "value": 3,
-        "max": 12
-      },
-      "active_sheet": "",
+      "hitDice": "",            
       "exhaustion": 0,
+      "dado_extra": 0,
       "classe": "",
+      "notas": "",
       "nivel": "1"
     }
   },
